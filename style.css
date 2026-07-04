@@ -1,4 +1,6 @@
-/* বেসিক রিসেট */
+/* ==========================================
+   ১. বেসিক রিসেট ও গ্লোবাল স্টাইল (Global Styles)
+   ========================================== */
 * {
     margin: 0;
     padding: 0;
@@ -7,16 +9,18 @@
 }
 
 body {
-    background-color: #f4f6f9;
-    color: #333;
+    background-color: #f8fafc;
+    color: #1e293b;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
-/* হেডার ও নেভিগেশন */
+/* ==========================================
+   ২. হেডার ও মেনুবার ডিজাইন (Navbar)
+   ========================================== */
 header {
-    background-color: #1e293b;
+    background-color: #0f172a;
     color: white;
     display: flex;
     justify-content: space-between;
@@ -24,19 +28,21 @@ header {
     padding: 15px 50px;
     position: sticky;
     top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 999;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
     font-size: 24px;
     font-weight: bold;
     color: #38bdf8;
+    letter-spacing: 0.5px;
 }
 
 .nav-links {
     display: flex;
     list-style: none;
+    align-items: center;
 }
 
 .nav-links li {
@@ -49,118 +55,221 @@ header {
     padding: 10px 15px;
     display: block;
     font-size: 15px;
-    transition: color 0.3s;
+    font-weight: 500;
+    transition: all 0.3s ease;
 }
 
 .nav-links a:hover {
     color: #38bdf8;
 }
 
-/* ড্রপডাউন মেনু */
+/* ==========================================
+   ৩. ড্রপডাউন মেনু লজিক ও ডিজাইন (Dropdown)
+   ========================================== */
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #0f172a;
-    min-width: 200px;
-    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    background-color: #1e293b;
+    min-width: 220px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
     top: 100%;
     left: 0;
-    border-radius: 4px;
+    border-radius: 6px;
+    padding: 5px 0;
 }
 
 .dropdown-content a {
     color: #94a3b8;
     padding: 12px 16px;
-    border-bottom: 1px solid #1e293b;
+    font-size: 14px;
+    border-bottom: 1px solid #334155;
+}
+
+.dropdown-content a:last-child {
+    border-bottom: none;
 }
 
 .dropdown-content a:hover {
-    background-color: #1e293b;
-    color: white;
+    background-color: #334155;
+    color: #38bdf8;
+    padding-left: 20px; /* হোভার করলে একটু ডানে সরবে, দেখতে সুন্দর লাগে */
 }
 
+/* মাউস নিলে ড্রপডাউন দেখাবে */
 .dropdown:hover .dropdown-content {
     display: block;
 }
 
-/* মেইন কন্টেন্ট এরিয়া */
+.nav-links i {
+    font-size: 12px;
+    margin-left: 3px;
+}
+
+/* ==========================================
+   ৪. মেইন কন্টেন্ট এরিয়া (Main Content)
+   ========================================== */
 main {
     flex: 1;
     padding: 40px 50px;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
 }
 
-/* ফুটার */
-footer {
-    background-color: #0f172a;
-    color: #64748b;
-    /* লগইন ও রেজিস্ট্রেশন পপ-আপ (Modal) স্টাইল */
+#home {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+}
+
+#home h1 {
+    color: #0f172a;
+    margin-bottom: 10px;
+}
+
+/* ==========================================
+   ৫. লগইন ও রেজিস্ট্রেশন পপ-আপ (Modal Design)
+   ========================================== */
 .modal {
-    display: none; 
+    display: none; /* শুরুতে লুকানো থাকবে */
     position: fixed; 
-    z-index: 9999; 
+    z-index: 9999; /* সবকিছুর ওপরে থাকবে */
     left: 0;
     top: 0;
     width: 100%; 
     height: 100%; 
-    overflow: auto; 
-    background-color: rgba(0,0,0,0.5); /* ব্যাকগ্রাউন্ড কালো ও ঝাপসা করবে */
+    background-color: rgba(15, 23, 42, 0.6); /* গাঢ় ঝাপসা ব্যাকগ্রাউন্ড */
+    backdrop-filter: blur(4px); /* মডার্ন গ্লাস ইফেক্ট */
 }
 
 .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; 
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
+    background-color: #ffffff;
+    margin: 10% auto; 
+    padding: 30px;
+    border: 1px solid #e2e8f0;
+    width: 90%;
     max-width: 400px; 
-    border-radius: 8px;
+    border-radius: 12px;
     position: relative;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    animation: slideDown 0.3s ease-out; /* খোলার সময় সুন্দর অ্যানিমেশন */
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
 .close {
-    color: #aaa;
-    float: right;
+    color: #64748b;
+    position: absolute;
+    right: 20px;
+    top: 15px;
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
-    position: absolute;
-    right: 15px;
-    top: 5px;
+    transition: color 0.2s;
 }
 
-.close:hover,
-.close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
+.close:hover {
+    color: #ef4444;
+}
+
+.modal-content h2 {
+    margin-bottom: 20px;
+    color: #0f172a;
+    font-size: 22px;
+    border-bottom: 2px solid #38bdf8;
+    padding-bottom: 8px;
+    display: inline-block;
 }
 
 .modal-content input {
     width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    outline: none;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+.modal-content input:focus {
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
 }
 
 .modal-content button {
     width: 100%;
     background-color: #38bdf8;
     color: white;
-    padding: 10px;
+    padding: 12px;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
     font-weight: bold;
+    font-size: 16px;
+    transition: background 0.2s;
 }
 
 .modal-content button:hover {
     background-color: #0284c7;
 }
+
+/* ==========================================
+   ৬. ডাটা ডিসপ্লে কার্ড (Dynamic Card Design)
+   ========================================== */
+.card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card h3 {
+    font-size: 18px;
+    color: #0f172a;
+    margin-bottom: 8px;
+}
+
+.card p {
+    color: #64748b;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.download-btn {
+    background-color: #22c55e;
+    color: white;
     text-align: center;
-    padding: 15px;
+    padding: 10px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+
+.download-btn:hover {
+    background-color: #16a34a;
+}
+
+/* ==========================================
+   ৭. ফুটার ডিজাইন (Footer)
+   ========================================== */
+footer {
+    background-color: #0f172a;
+    color: #94a3b8;
+    text-align: center;
+    padding: 20px;
     font-size: 14px;
     margin-top: auto;
+    border-top: 1px solid #1e293b;
 }
