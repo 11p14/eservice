@@ -1,12 +1,9 @@
-/* ==========================================
-   ১. বেসিক রিসেট ও গ্লোবাল স্টাইল (Global Styles)
-   ========================================== */
-* { 
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-} 
+}
 
 body {
     background-color: #f8fafc;
@@ -16,9 +13,6 @@ body {
     min-height: 100vh;
 }
 
-/* ==========================================
-   ২. হেডার ও মেনুবার ডিজাইন (Navbar)
-   ========================================== */
 header {
     background-color: #0f172a;
     color: white;
@@ -63,9 +57,6 @@ header {
     color: #38bdf8;
 }
 
-/* ==========================================
-   ৩. ড্রপডাউন মেনু লজিক ও ডিজাইন (Dropdown)
-   ========================================== */
 .dropdown-content {
     display: none;
     position: absolute;
@@ -92,10 +83,9 @@ header {
 .dropdown-content a:hover {
     background-color: #334155;
     color: #38bdf8;
-    padding-left: 20px; /* হোভার করলে একটু ডানে সরবে, দেখতে সুন্দর লাগে */
+    padding-left: 20px;
 }
 
-/* মাউস নিলে ড্রপডাউন দেখাবে */
 .dropdown:hover .dropdown-content {
     display: block;
 }
@@ -105,9 +95,6 @@ header {
     margin-left: 3px;
 }
 
-/* ==========================================
-   ৪. মেইন কন্টেন্ট এরিয়া (Main Content)
-   ========================================== */
 main {
     flex: 1;
     padding: 40px 50px;
@@ -129,32 +116,29 @@ main {
     margin-bottom: 10px;
 }
 
-/* ==========================================
-   ৫. লগইন ও রেজিস্ট্রেশন পপ-আপ (Modal Design)
-   ========================================== */
 .modal {
-    display: none; /* শুরুতে লুকানো থাকবে */
-    position: fixed; 
-    z-index: 9999; /* সবকিছুর ওপরে থাকবে */
+    display: none;
+    position: fixed;
+    z-index: 9999;
     left: 0;
     top: 0;
-    width: 100%; 
-    height: 100%; 
-    background-color: rgba(15, 23, 42, 0.6); /* গাঢ় ঝাপসা ব্যাকগ্রাউন্ড */
-    backdrop-filter: blur(4px); /* মডার্ন গ্লাস ইফেক্ট */
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
 }
 
 .modal-content {
     background-color: #ffffff;
-    margin: 10% auto; 
+    margin: 10% auto;
     padding: 30px;
     border: 1px solid #e2e8f0;
     width: 90%;
-    max-width: 400px; 
+    max-width: 400px;
     border-radius: 12px;
     position: relative;
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    animation: slideDown 0.3s ease-out; /* খোলার সময় সুন্দর অ্যানিমেশন */
+    animation: slideDown 0.3s ease-out;
 }
 
 @keyframes slideDown {
@@ -219,9 +203,6 @@ main {
     background-color: #0284c7;
 }
 
-/* ==========================================
-   ৬. ডাটা ডিসপ্লে কার্ড (Dynamic Card Design)
-   ========================================== */
 .card {
     background: white;
     border: 1px solid #e2e8f0;
@@ -261,9 +242,6 @@ main {
     background-color: #16a34a;
 }
 
-/* ==========================================
-   ৭. ফুটার ডিজাইন (Footer)
-   ========================================== */
 footer {
     background-color: #0f172a;
     color: #94a3b8;
