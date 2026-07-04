@@ -1,147 +1,203 @@
-<!DOCTYPE html>
-<html lang="bn">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>eservice - Multi-Functional Web Platform</title>
-    <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head> 
-<body> 
- 
-    <header>
-        <div class="logo">eservice</div>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="#home">1. Home</a></li>
-                
-                <li class="dropdown">
-                    <a href="#account" class="dropbtn">2. My Account <i class="fas fa-caret-down"></i></a>
-                    <div class="dropdown-content">
-                        <a href="#login" onclick="showModal('login-modal')">Login</a>
-                        <a href="#register" onclick="showModal('register-modal')">Create Account</a>
-                        <a href="#forgot" onclick="showModal('forgot-modal')">Forgot Password</a>
-                    </div>
-                </li>
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyUF1ZoWUXwaxrxUwSO_XbbLfXq0hK9gChLGP4dlZylt8mY5fY7WephKE4SlTP7P9YR/exec"; 
 
-                <li class="dropdown">
-                    <a href="#products" class="dropbtn">3. Our Product <i class="fas fa-caret-down"></i></a>
-                    <div class="dropdown-content">
-                        <a href="#electrical">3.1 Electrical</a>
-                        <a href="#virtual">3.2 Virtual</a>
-                    </div>
-                </li>
+let generatedOTP = ""; 
 
-                <li><a href="#ebook">4. e-Book</a></li>
+window.onload = function() {
+    const role = localStorage.getItem("role");
+    if (role === "developer") {
+        showDeveloperPanel();
+    } else if (role === "user") {
+        enableDownloads();
+    }
+};
 
-                <li class="dropdown">
-                    <a href="#study" class="dropbtn">5. Study <i class="fas fa-caret-down"></i></a>
-                    <div class="dropdown-content">
-                        <a href="#grammar">5.1 Grammar</a>
-                        <a href="#paragraph">5.2 Paragraph</a>
-                        <a href="#story">5.3 Story Writing</a>
-                        <a href="#letter">5.4 Letter Writing</a>
-                        <a href="#quiz">5.5 Quiz</a>
-                        <a href="#exam">5.6 Exam</a>
-                        <a href="#result">5.7 Result</a>
-                    </div>
-                </li>
+function showModal(id) {
+    const modal = document.getElementById(id);
+    if (modal) {
+        modal.style.display = "block";
+    }
+}
 
-                <li><a href="#cv-maker">6. CV Maker</a></li>
+function closeModal(id) {
+    const modal = document.getElementById(id);
+    if (modal) {
+        modal.style.display = "none";
+    }
+}
 
-                <li class="dropdown">
-                    <a href="#ai-tools" class="dropbtn">7. AI Tools <i class="fas fa-caret-down"></i></a>
-                    <div class="dropdown-content">
-                        <a href="#photo-enhancer">7.1 Photo Enhancer</a>
-                        <a href="#remove-bg">7.2 Remove Background</a>
-                        <a href="#passport-photo">7.3 Passport Size Maker</a>
-                    </div>
-                </li>
+async function sendOTP() {
+    const email = document.getElementById("reg-email").value;
+    const mobile = document.getElementById("reg-mobile").value;
+    const password = document.getElementById("reg-password").value;
 
-                <li class="dropdown">
-                    <a href="#pdf-tools" class="dropbtn">7. PDF Tools <i class="fas fa-caret-down"></i></a>
-                    <div class="dropdown-content">
-                        <a href="#pdf-to-img">7.1 PDF to Image</a>
-                        <a href="#img-to-pdf">7.2 Image to PDF</a>
-                        <a href="#pdf-lock">7.3 PDF Lock & Unlock</a>
-                    </div>
-                </li>
+    if (!email || !mobile || !password) {
+        alert("অনুগ্রহ করে সব তথ্য পূরণ করুন!");
+        return;
+    }
 
-                <li><a href="#about">8. About</a></li>
-            </ul>
-        </nav>
-    </header>
+    alert("ওটিপি পাঠানো হচ্ছে... দয়া করে অপেক্ষা করুন।");
 
-    <main id="main-content">
-        <section id="home">
-            <h1>স্বাগতম আমাদের প্ল্যাটফর্মে</h1>
-            <p>এখানে আপনি পড়াশোনা, এআই টুলস এবং বিভিন্ন ডিজিটাল প্রোডাক্টের সুবিধা পাবেন।</p>
-        </section>
+    try {
+        const response = await fetch(WEB_APP_URL, {
+            method: "POST",
+            body: JSON.stringify({
+                action: "sendOTP",
+                email: email
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            generatedOTP = result.otp;
+            document.getElementById("reg-step-1").style.display = "none";
+            document.getElementById("reg-step-2").style.display = "block";
+            alert("আপনার ইমেইল চেক করুন! ওটিপি পাঠানো হয়েছে।");
+        } else {
+            alert("ওটিপি পাঠাতে ব্যর্থ: " + result.error);
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("সার্ভার ত্রুটি! আবার চেষ্টা করুন।");
+    }
+}
 
-        <section id="developer-panel" style="display: none; background: #fff; padding: 25px; border-radius: 8px; margin-top: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-            <h2><i class="fas fa-user-shield"></i> Developer Data Entry Panel</h2>
-            <hr style="margin: 10px 0; border: 0; border-top: 1px solid #cbd5e1;"><br>
-            
-            <label for="select-sheet"><b>কোথায় ডাটা এন্ট্রি করবেন সিলেক্ট করুন:</b></label><br><br>
-            <select id="select-sheet" style="padding: 8px; width: 100%; max-width: 400px; border-radius: 4px; border: 1px solid #cbd5e1;">
-                <option value="E_Books">4. e-Book</option>
-                <option value="Study_Materials">5. Study (Grammar/Paragraph/Story/Letter)</option>
-            </select>
+async function verifyOTPAndRegister() {
+    const userOTP = document.getElementById("reg-otp").value;
+    const email = document.getElementById("reg-email").value;
+    const mobile = document.getElementById("reg-mobile").value;
+    const password = document.getElementById("reg-password").value;
 
-            <br><br>
+    if (userOTP !== generatedOTP) {
+        alert("ভুল ওটিপি (OTP)! আবার চেষ্টা করুন।");
+        return;
+    }
 
-            <div id="dynamic-fields">
-                <div id="ebook-fields">
-                    <input type="text" id="ebook-category" placeholder="বই বা লেখার ক্যাটাগরি (যেমন: Grammar, Class 10, Story)" style="width: 100%; padding: 10px; margin-bottom: 12px; border: 1px solid #cbd5e1; border-radius: 4px;">
-                    <input type="text" id="ebook-title" placeholder="টপিক বা বইয়ের নাম (যেমন: Tense, Paragraph Content)" style="width: 100%; padding: 10px; margin-bottom: 12px; border: 1px solid #cbd5e1; border-radius: 4px;">
-                    <input type="text" id="ebook-link" placeholder="পিডিএফ ডাউনলোড লিংক (Google Drive বা ক্লাউড লিংক)" style="width: 100%; padding: 10px; margin-bottom: 12px; border: 1px solid #cbd5e1; border-radius: 4px;">
-                </div>
-            </div>
-            
-            <br>
-            <button onclick="submitDataEntry()" style="background: #22c55e; color: white; padding: 12px 25px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 15px;"><i class="fas fa-cloud-upload-alt"></i> গুগল শীটে সেভ করুন</button>
-            <button onclick="logout()" style="background: #ef4444; color: white; padding: 12px 25px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 15px; margin-left: 10px;"><i class="fas fa-sign-out-alt"></i> লগআউট</button>
-        </section>
+    try {
+        const response = await fetch(WEB_APP_URL, {
+            method: "POST",
+            body: JSON.stringify({
+                action: "register",
+                email: email,
+                mobile: mobile,
+                password: password
+            })
+        });
 
-        <section id="display-area" style="margin-top: 40px;">
-            <h2>ডাউনলোড সেকশন (e-Books & Study Materials)</h2>
-            <div id="data-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 20px;">
-                </div>
-        </section>
-    </main>
+        const result = await response.json();
 
-    <div id="login-modal" class="modal" style="display:none;">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('login-modal')">&times;</span>
-            <h2>Login</h2>
-            <input type="text" id="login-identity" placeholder="Email or Mobile Number" required>
-            <input type="password" id="login-password" placeholder="Password" required>
-            <button onclick="handleLogin()">Login</button>
-        </div>
-    </div>
+        if (result.success) {
+            alert(result.message);
+            closeModal("register-modal");
+            document.getElementById("reg-step-1").style.display = "block";
+            document.getElementById("reg-step-2").style.display = "none";
+        } else {
+            alert(result.message);
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("রেজিস্ট্রেশন ব্যর্থ হয়েছে!");
+    }
+}
 
-    <div id="register-modal" class="modal" style="display:none;">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('register-modal')">&times;</span>
-            <h2>Create Account</h2>
-            <div id="reg-step-1">
-                <input type="email" id="reg-email" placeholder="Email Address" required>
-                <input type="text" id="reg-mobile" placeholder="Mobile Number" required>
-                <input type="password" id="reg-password" placeholder="Password" required>
-                <button onclick="sendOTP()">Send OTP</button>
-            </div>
-            <div id="reg-step-2" style="display:none;">
-                <p style="color: green; margin-bottom: 10px;">আপনার ইমেইলে একটি ওটিপি পাঠানো হয়েছে।</p>
-                <input type="text" id="reg-otp" placeholder="Enter 6-Digit OTP" required>
-                <button onclick="verifyOTPAndRegister()">Verify & Register</button>
-            </div>
-        </div>
-    </div>
+async function handleLogin() {
+    const identity = document.getElementById("login-identity").value;
+    const password = document.getElementById("login-password").value;
 
-    <footer>
-        <p>&copy; 2026 eservice | All Rights Reserved | Developed for Learning Purpose</p>
-    </footer>
+    if (!identity || !password) {
+        alert("ইমেইল অথবা মোবাইল নম্বর এবং পাসওয়ার্ড দিন!");
+        return;
+    }
 
-    <script src="./auth.js"></script>
-</body>
-</html>
+    try {
+        const response = await fetch(WEB_APP_URL, {
+            method: "POST",
+            body: JSON.stringify({
+                action: "login",
+                identity: identity,
+                password: password
+            })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            alert(result.message);
+            closeModal("login-modal");
+
+            if (result.role === "developer") {
+                localStorage.setItem("role", "developer");
+                showDeveloperPanel(); 
+            } else {
+                localStorage.setItem("role", "user");
+                localStorage.setItem("userEmail", result.email);
+                enableDownloads(); 
+            }
+        } else {
+            alert(result.message);
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("লগইন করতে সমস্যা হচ্ছে!");
+    }
+}
+
+function showDeveloperPanel() {
+    document.getElementById("developer-panel").style.display = "block";
+    document.getElementById("home").style.display = "none";
+}
+
+function enableDownloads() {
+    console.log("ইউজার লগইন অবস্থায় আছেন। পিডিএফ ডাউনলোড সুবিধা আনলকড।");
+}
+
+async function submitDataEntry() {
+    const selectedSheet = document.getElementById("select-sheet").value;
+    let rowData = [];
+
+    const cat = document.getElementById("ebook-category").value;
+    const title = document.getElementById("ebook-title").value;
+    const link = document.getElementById("ebook-link").value;
+
+    if (!cat || !title || !link) { 
+        alert("অনুগ্রহ করে সব তথ্য পূরণ করুন!"); 
+        return; 
+    }
+    
+    if (selectedSheet === "E_Books") {
+        rowData = ["BK-" + Date.now(), cat, title, "https://via.placeholder.com/150", link];
+    } else if (selectedSheet === "Study_Materials") {
+        rowData = ["MAT-" + Date.now(), cat, title, "Text Content", link];
+    }
+
+    alert("ডাটা গুগল শীটে পাঠানো হচ্ছে...");
+
+    try {
+        const response = await fetch(WEB_APP_URL, {
+            method: "POST",
+            body: JSON.stringify({
+                action: "insertData",
+                sheetName: selectedSheet,
+                rowData: rowData
+            })
+        });
+        const result = await response.json();
+        if (result.success) {
+            alert(result.message);
+            document.getElementById("ebook-category").value = "";
+            document.getElementById("ebook-title").value = "";
+            document.getElementById("ebook-link").value = "";
+        } else {
+            alert("ব্যর্থ: " + result.message);
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("ডাটা সেভ করতে সমস্যা হয়েছে।");
+    }
+}
+
+function logout() {
+    localStorage.clear();
+    alert("লগআউট সফল হয়েছে!");
+    location.reload();
+}
