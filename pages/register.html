@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>অ্যাকাউন্ট খুলুন — লার্নিংহাব</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div class="form-card">
+  <h2>অ্যাকাউন্ট খুলুন</h2>
+
+  <div id="step-register">
+    <div class="field">
+      <label>ইমেইল</label>
+      <input type="email" id="reg-email" placeholder="you@example.com">
+    </div>
+    <div class="field">
+      <label>মোবাইল নম্বর</label>
+      <input type="text" id="reg-mobile" placeholder="01XXXXXXXXX">
+    </div>
+    <div class="field">
+      <label>পাসওয়ার্ড</label>
+      <input type="password" id="reg-password" placeholder="কমপক্ষে ৬ ক্যারেক্টার">
+    </div>
+    <button class="btn" style="width:100%" onclick="doRegister()">OTP পাঠান</button>
+    <p class="msg" id="reg-msg"></p>
+  </div>
+
+  <div id="step-otp" class="hidden">
+    <p>আপনার ইমেইলে পাঠানো ৬-সংখ্যার কোডটি লিখুন।</p>
+    <div class="field">
+      <label>OTP কোড</label>
+      <input type="text" id="otp-code" placeholder="123456">
+    </div>
+    <button class="btn" style="width:100%" onclick="doVerify()">ভেরিফাই করুন</button>
+    <p class="msg" id="otp-msg"></p>
+  </div>
+
+  <p class="switch-link">আগে থেকেই অ্যাকাউন্ট আছে? <a href="login.html">লগইন করুন</a></p>
+</div>
+
+<script src="../js/api.js"></script>
+<script>
+let pendingEmail = '';
+
+async function doRegister() {
+  const email = document.getElementById('reg-email').value.trim();
+  const mobile = document.getElementById('reg-mobile').value.trim();
+  const password = document.getElementById('reg-password').value;
+  const msg = document.getElementById('reg-msg');
+  msg.textContent = ''; msg.className = 'msg';
+
+  if (!email || password.length < 6) {
+    msg.textContent = 'সঠিক ইমেইল ও কমপক্ষে ৬ ক্যারেক্টারের পাসওয়ার্ড দিন';
+    msg.className = 'msg error';
+    return;
+  }
+
+  const res = await apiPost({ action: 'register', email, mobile, password });
+  if (res.ok) {
+    pendingEmail = email;
+    document.getElementById('step-register').classList.add('hidden');
+    document.getElementById('step-otp').classList.remove('hidden');
+  } else {
+    msg.textContent = res.error || 'সমস্যা হয়েছে';
+    msg.className = 'msg error';
+  }
+}
+
+async function doVerify() {
+  const otp = document.getElementById('otp-code').value.trim();
+  const msg = document.getElementById('otp-msg');
+  const res = await apiPost({ action: 'verifyOtp', email: pendingEmail, otp });
+  if (res.ok) {
+    Session.setToken(res.token);
+    msg.textContent = 'সফল! হোমপেজে নিয়ে যাওয়া হচ্ছে…';
+    msg.className = 'msg success';
+    setTimeout(() => window.location.href = '../index.html', 1200);
+  } else {
+    msg.textContent = res.error || 'ভুল কোড';
+    msg.className = 'msg error';
+  }
+}
+</script>
+</body>
+</html>

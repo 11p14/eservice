@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDF Tools — লার্নিংহাব</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="nav-wrap">
+    <a class="brand" href="../index.html">লার্নিং<span>হাব</span></a>
+    <nav class="main-nav"><ul><li><a href="../index.html">হোম</a></li></ul></nav>
+    <div id="auth-area"></div>
+  </div>
+</header>
+
+<div class="container" style="max-width:760px;">
+  <h1 style="margin-top:40px;" id="tool-title">PDF Tools</h1>
+  <p style="color:var(--muted)">
+    এই টুলগুলো সম্পূর্ণ ব্রাউজারেই (client-side) করা সম্ভব, কোনো ব্যাকএন্ড লাগবে না:
+  </p>
+  <ul style="color:var(--muted)">
+    <li><b>PDF to Image</b> — <code>pdf.js</code> লাইব্রেরি দিয়ে PDF-এর প্রতিটা পেজ ক্যানভাসে এঁকে PNG এ এক্সপোর্ট।</li>
+    <li><b>Image to PDF</b> — <code>jsPDF</code> দিয়ে একাধিক ছবি একটা PDF-এ যোগ করা।</li>
+    <li><b>PDF Lock &amp; Unlock</b> — <code>pdf-lib</code> লাইব্রেরি দিয়ে পাসওয়ার্ড সেট/রিমুভ করা।</li>
+  </ul>
+  <p style="color:var(--muted)">README.md-এ ধাপে ধাপে ইন্টিগ্রেশন গাইড দেওয়া আছে।</p>
+</div>
+
+<footer class="site-footer">&copy; <span id="year"></span> লার্নিংহাব</footer>
+<script src="../js/api.js"></script>
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+const tool = new URLSearchParams(location.search).get('tool');
+const labels = { 'pdf2img': 'PDF to Image', 'img2pdf': 'Image to PDF', 'lock': 'PDF Lock & Unlock' };
+if (tool && labels[tool]) document.getElementById('tool-title').textContent = labels[tool];
+</script>
+</body>
+</html>
