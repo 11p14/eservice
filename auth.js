@@ -2,7 +2,7 @@
 
 const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyUF1ZoWUXwaxrxUwSO_XbbLfXq0hK9gChLGP4dlZylt8mY5fY7WephKE4SlTP7P9YR/exec"; 
 
-let generatedOTP = ""; // ওটিপি সাময়িকভাবে ধরে রাখার জন্য
+let generatedOTP = ""; // ওটিপি সাময়িকভাবে ধরে রাখার জন্য 
 
 // পেজ লোড হওয়ার সময় আগের সেশন চেক করা (লগইন ধরে রাখার জন্য)
 window.onload = function() {
