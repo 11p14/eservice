@@ -2,16 +2,16 @@
  * api.js — Apps Script ব্যাকএন্ডের সাথে কথা বলার একমাত্র জায়গা।
  * এখানে GAS_URL বসাতে হবে (ডিপ্লয় করার পর যেই /exec লিংক পাবে)।
  */
-const GAS_URL = 'PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbzNtC9xwiZvxE9UHwa3_gzA1nYKcXi6F_9-Y55FqKvnCRHUb_eBZXIW98nR8YMX_BKF/exec';
 
 async function apiGet(params) {
   const qs = new URLSearchParams(params).toString();
-  const res = await fetch(`${GAS_URL}?${qs}`);
+  const res = await fetch(`${https://script.google.com/macros/s/AKfycbzNtC9xwiZvxE9UHwa3_gzA1nYKcXi6F_9-Y55FqKvnCRHUb_eBZXIW98nR8YMX_BKF/exec}?${qs}`);
   return res.json();
 }
 
 async function apiPost(payload) {
-  const res = await fetch(GAS_URL, {
+  const res = await fetch(https://script.google.com/macros/s/AKfycbzNtC9xwiZvxE9UHwa3_gzA1nYKcXi6F_9-Y55FqKvnCRHUb_eBZXIW98nR8YMX_BKF/execL, {
     method: 'POST',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // GAS doPost সহজ পার্স করতে text/plain ভালো কাজ করে
     body: JSON.stringify(payload)
