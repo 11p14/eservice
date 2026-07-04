@@ -6,12 +6,12 @@ const GAS_URL = 'https://script.google.com/macros/s/AKfycbzNtC9xwiZvxE9UHwa3_gzA
 
 async function apiGet(params) {
   const qs = new URLSearchParams(params).toString();
-  const res = await fetch(`${https://script.google.com/macros/s/AKfycbzNtC9xwiZvxE9UHwa3_gzA1nYKcXi6F_9-Y55FqKvnCRHUb_eBZXIW98nR8YMX_BKF/exec}?${qs}`);
+  const res = await fetch(`${GAS_URL}?${qs}`);
   return res.json();
 }
 
 async function apiPost(payload) {
-  const res = await fetch(https://script.google.com/macros/s/AKfycbzNtC9xwiZvxE9UHwa3_gzA1nYKcXi6F_9-Y55FqKvnCRHUb_eBZXIW98nR8YMX_BKF/execL, {
+  const res = await fetch(GAS_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // GAS doPost সহজ পার্স করতে text/plain ভালো কাজ করে
     body: JSON.stringify(payload)
