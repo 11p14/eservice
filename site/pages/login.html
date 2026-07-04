@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>লগইন — লার্নিংহাব</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div class="form-card">
+  <h2>লগইন করুন</h2>
+  <div class="field">
+    <label>ইমেইল</label>
+    <input type="email" id="login-email">
+  </div>
+  <div class="field">
+    <label>পাসওয়ার্ড</label>
+    <input type="password" id="login-password">
+  </div>
+  <button class="btn" style="width:100%" onclick="doLogin()">লগইন</button>
+  <p class="msg" id="login-msg"></p>
+  <p class="switch-link"><a href="forgot-password.html">পাসওয়ার্ড ভুলে গেছেন?</a></p>
+  <p class="switch-link">নতুন ইউজার? <a href="register.html">অ্যাকাউন্ট খুলুন</a></p>
+</div>
+
+<script src="../js/api.js"></script>
+<script>
+async function doLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+  const msg = document.getElementById('login-msg');
+
+  const res = await apiPost({ action: 'login', email, password });
+  if (res.ok) {
+    Session.setToken(res.token);
+    msg.textContent = 'সফল! হোমপেজে নিয়ে যাওয়া হচ্ছে…';
+    msg.className = 'msg success';
+    setTimeout(() => window.location.href = '../index.html', 900);
+  } else {
+    msg.textContent = res.error || 'লগইন ব্যর্থ হয়েছে';
+    msg.className = 'msg error';
+  }
+}
+</script>
+</body>
+</html>
