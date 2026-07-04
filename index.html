@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Functional Web Platform</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Font Awesome Icon এর জন্য (ঐচ্ছিক, সুন্দর ডিজাইনের জন্য) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- হেডার ও নেভিগেশন বার -->
+    <header>
+        <div class="logo">MyPlatform</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#home">1. Home</a></li>
+                
+                <!-- মাই অ্যাকাউন্ট ড্রপডাউন -->
+                <li class="dropdown">
+                    <a href="#account" class="dropbtn">2. My Account <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="#login" onclick="showModal('login-modal')">Login</a>
+                        <a href="#register" onclick="showModal('register-modal')">Create Account</a>
+                        <a href="#forgot" onclick="showModal('forgot-modal')">Forgot Password</a>
+                    </div>
+                </li>
+
+                <!-- আওয়ার প্রোডাক্ট ড্রপডাউন -->
+                <li class="dropdown">
+                    <a href="#products" class="dropbtn">3. Our Product <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="#electrical">3.1 Electrical</a>
+                        <a href="#virtual">3.2 Virtual</a>
+                    </div>
+                </li>
+
+                <li><a href="#ebook">4. e-Book</a></li>
+
+                <!-- স্টাডি ড্রপডাউন -->
+                <li class="dropdown">
+                    <a href="#study" class="dropbtn">5. Study <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="#grammar">5.1 Grammar</a>
+                        <a href="#paragraph">5.2 Paragraph</a>
+                        <a href="#story">5.3 Story Writing</a>
+                        <a href="#letter">5.4 Letter Writing</a>
+                        <a href="#quiz">5.5 Quiz</a>
+                        <a href="#exam">5.6 Exam</a>
+                        <a href="#result">5.7 Result</a>
+                    </div>
+                </li>
+
+                <li><a href="#cv-maker">6. CV Maker</a></li>
+
+                <!-- এআই টুলস ড্রপডাউন -->
+                <li class="dropdown">
+                    <a href="#ai-tools" class="dropbtn">7. AI Tools <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="#photo-enhancer">7.1 Photo Enhancer</a>
+                        <a href="#remove-bg">7.2 Remove Background</a>
+                        <a href="#passport-photo">7.3 Passport Size Maker</a>
+                    </div>
+                </li>
+
+                <!-- পিডিএফ টুলস ড্রপডাউন -->
+                <li class="dropdown">
+                    <a href="#pdf-tools" class="dropbtn">7. PDF Tools <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="#pdf-to-img">7.1 PDF to Image</a>
+                        <a href="#img-to-pdf">7.2 Image to PDF</a>
+                        <a href="#pdf-lock">7.3 PDF Lock & Unlock</a>
+                    </div>
+                </li>
+
+                <li><a href="#about">8. About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- মূল কন্টেন্ট এরিয়া -->
+    <main id="main-content">
+        <section id="home">
+            <h1>স্বাগতম আমাদের প্ল্যাটফর্মে</h1>
+            <p>এখানে আপনি পড়াশোনা, এআই টুলস এবং বিভিন্ন ডিজিটাল প্রোডাক্টের সুবিধা পাবেন।</p>
+        </section>
+    </main>
+
+    <!-- ফুটার -->
+    <footer>
+        <p>&copy; 2026 All Rights Reserved | Developed for Learning Purpose</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>
