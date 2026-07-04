@@ -86,7 +86,33 @@
             <p>এখানে আপনি পড়াশোনা, এআই টুলস এবং বিভিন্ন ডিজিটাল প্রোডাক্টের সুবিধা পাবেন।</p>
         </section>
     </main>
+<div id="login-modal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('login-modal')">&times;</span>
+        <h2>Login</h2>
+        <input type="text" id="login-identity" placeholder="Email or Mobile Number" required>
+        <input type="password" id="login-password" placeholder="Password" required>
+        <button onclick="handleLogin()">Login</button>
+    </div>
+</div>
 
+<div id="register-modal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('register-modal')">&times;</span>
+        <h2>Create Account</h2>
+        <div id="reg-step-1">
+            <input type="email" id="reg-email" placeholder="Email Address" required>
+            <input type="text" id="reg-mobile" placeholder="Mobile Number" required>
+            <input type="password" id="reg-password" placeholder="Password" required>
+            <button onclick="sendOTP()">Send OTP</button>
+        </div>
+        <div id="reg-step-2" style="display:none;">
+            <p style="color: green;">আপনার ইমেইলে একটি ওটিপি পাঠানো হয়েছে।</p>
+            <input type="text" id="reg-otp" placeholder="Enter 6-Digit OTP" required>
+            <button onclick="verifyOTPAndRegister()">Verify & Register</button>
+        </div>
+    </div>
+</div>
     <!-- ফুটার -->
     <footer>
         <p>&copy; 2026 All Rights Reserved | Developed for Learning Purpose</p>
