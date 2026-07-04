@@ -36,7 +36,7 @@ async function sendOTP() {
     alert("ওটিপি পাঠানো হচ্ছে... দয়া করে অপেক্ষা করুন।");
 
     try {
-        const response = await fetch(WEB_APP_URL, { // এখানে ভেরিয়েবল ব্যবহার করা হয়েছে
+        const response = await fetch(https://script.google.com/macros/s/AKfycbyUF1ZoWUXwaxrxUwSO_XbbLfXq0hK9gChLGP4dlZylt8mY5fY7WephKE4SlTP7P9YR/exec, { // এখানে ভেরিয়েবল ব্যবহার করা হয়েছে
             method: "POST",
             body: JSON.stringify({
                 action: "sendOTP",
@@ -73,7 +73,7 @@ async function verifyOTPAndRegister() {
     }
 
     try {
-        const response = await fetch(WEB_APP_URL, {
+        const response = await fetch(https://script.google.com/macros/s/AKfycbyUF1ZoWUXwaxrxUwSO_XbbLfXq0hK9gChLGP4dlZylt8mY5fY7WephKE4SlTP7P9YR/exec, {
             method: "POST",
             body: JSON.stringify({
                 action: "register",
@@ -111,7 +111,7 @@ async function handleLogin() {
     }
 
     try {
-        const response = await fetch(WEB_APP_URL, {
+        const response = await fetch(https://script.google.com/macros/s/AKfycbyUF1ZoWUXwaxrxUwSO_XbbLfXq0hK9gChLGP4dlZylt8mY5fY7WephKE4SlTP7P9YR/exec, {
             method: "POST",
             body: JSON.stringify({
                 action: "login",
@@ -178,7 +178,7 @@ async function submitDataEntry() {
     alert("ডাটা গুগল শীটে পাঠানো হচ্ছে...");
 
     try {
-        const response = await fetch(WEB_APP_URL, {
+        const response = await fetch(https://script.google.com/macros/s/AKfycbyUF1ZoWUXwaxrxUwSO_XbbLfXq0hK9gChLGP4dlZylt8mY5fY7WephKE4SlTP7P9YR/exec, {
             method: "POST",
             body: JSON.stringify({
                 action: "insertData",
