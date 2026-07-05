@@ -5,18 +5,34 @@
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbwWnBrJPB-qQdQsEye2y5lya_Grk0tAD366oPUin2fmksR2KFYrp3aTSoesHBm7qid5/exec';
 
 async function apiGet(params) {
-  const qs = new URLSearchParams(params).toString();
-  const res = await fetch(`${'https://script.google.com/macros/s/AKfycbwWnBrJPB-qQdQsEye2y5lya_Grk0tAD366oPUin2fmksR2KFYrp3aTSoesHBm7qid5/exec'}?${qs}`);
-  return res.json();
+  try {
+    const qs = new URLSearchParams(params).toString();
+    // এখানে GAS_URL ব্যবহার করা হয়েছে এবং কোটেশন মার্কের ভুল ঠিক করা হয়েছে
+    const res = await fetch(`${GAS_URL}?${qs}`);
+    
+    if (!res.ok) throw new Error('Network response was not ok');
+    return await res.json();
+  } catch (error) {
+    console.error("GET Request Failed:", error);
+    return { success: false, error: error.message };
+  }
 }
 
 async function apiPost(payload) {
-  const res = await fetch('https://script.google.com/macros/s/AKfycbwWnBrJPB-qQdQsEye2y5lya_Grk0tAD366oPUin2fmksR2KFYrp3aTSoesHBm7qid5/exec', {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // GAS doPost সহজ পার্স করতে text/plain ভালো কাজ করে
-    body: JSON.stringify(payload)
-  });
-  return res.json();
+  try {
+    // এখানেও হার্ডকোডেড লিংকের বদলে GAS_URL ব্যবহার করা হয়েছে
+    const res = await fetch(GAS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' }, 
+      body: JSON.stringify(payload)
+    });
+    
+    if (!res.ok) throw new Error('Network response was not ok');
+    return await res.json();
+  } catch (error) {
+    console.error("POST Request Failed:", error);
+    return { success: false, error: error.message };
+  }
 }
 
 // ---------- সেশন হেল্পার ----------
@@ -36,12 +52,19 @@ const Session = {
 function renderAuthArea() {
   const el = document.getElementById('auth-area');
   if (!el) return;
+  
   if (Session.isLoggedIn()) {
     el.innerHTML = `<button class="btn ghost" id="logout-btn">লগআউট</button>`;
-    document.getElementById('logout-btn').onclick = () => { Session.clear(); renderAuthArea(); };
+    
+    document.getElementById('logout-btn').onclick = () => { 
+      Session.clear(); 
+      // লগআউট করার পর পেজ রিফ্রেশ হবে যেন সুরক্ষিত ডেটা স্ক্রিন থেকে চলে যায়
+      window.location.reload(); 
+    };
   } else {
     el.innerHTML = `<a class="btn ghost" href="pages/login.html">লগইন</a>
-                     <a class="btn" href="pages/register.html">অ্যাকাউন্ট খুলুন</a>`;
+                    <a class="btn" href="pages/register.html">অ্যাকাউন্ট খুলুন</a>`;
   }
 }
+
 document.addEventListener('DOMContentLoaded', renderAuthArea);
