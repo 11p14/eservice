@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>আমার প্রোফাইল — লার্নিংহাব</title>
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  .avatar-wrap { display:flex; flex-direction:column; align-items:center; gap:10px; margin-bottom:20px; }
+  .avatar {
+    width:96px; height:96px; border-radius:50%; object-fit:cover;
+    border:3px solid var(--gold); background:var(--cream-2);
+  }
+  .avatar-placeholder {
+    width:96px; height:96px; border-radius:50%; background:var(--cream-2);
+    display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:0.8rem;
+    border:3px solid var(--gold);
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-wrap">
+    <a class="brand" href="../index.html">লার্নিং<span>হাব</span></a>
+    <nav class="main-nav"><ul><li><a href="../index.html">হোম</a></li></ul></nav>
+    <div id="auth-area"></div>
+  </div>
+</header>
+
+<div class="form-card hidden" id="not-logged-in" style="text-align:center;">
+  <h2>লগইন করা নেই</h2>
+  <p style="color:var(--muted)">প্রোফাইল দেখতে/এডিট করতে আগে লগইন করুন।</p>
+  <a class="btn" href="login.html">লগইন করুন</a>
+</div>
+
+<div class="form-card hidden" id="profile-box">
+  <h2>আমার প্রোফাইল</h2>
+
+  <div class="avatar-wrap">
+    <img id="avatar-img" class="avatar hidden" alt="প্রোফাইল ছবি">
+    <div id="avatar-placeholder" class="avatar-placeholder">ছবি নেই</div>
+    <input type="file" id="photo-input" accept="image/*">
+  </div>
+
+  <div class="field">
+    <label>ইমেইল</label>
+    <input type="text" id="p-email" disabled>
+  </div>
+  <div class="field">
+    <label>মোবাইল নম্বর</label>
+    <input type="text" id="p-mobile" disabled>
+  </div>
+  <div class="field">
+    <label>নাম</label>
+    <input type="text" id="p-name" placeholder="আপনার পূর্ণ নাম">
+  </div>
+  <div class="field">
+    <label>ঠিকানা (ঐচ্ছিক)</label>
+    <input type="text" id="p-address" placeholder="যেমন: ঢাকা, বাংলাদেশ">
+  </div>
+
+  <button class="btn" style="width:100%" onclick="saveProfile()">সেভ করুন</button>
+  <p class="msg" id="p-msg"></p>
+</div>
+
+<footer class="site-footer">&copy; <span id="year"></span> লার্নিংহাব</footer>
+
+<script src="../js/api.js"></script>
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+let pendingPhotoDataUrl = null; // নতুন ছবি বাছাই করলে base64 এখানে জমা থাকবে
+
+async function loadProfile() {
+  const notLoggedBox = document.getElementById('not-logged-in');
+  const profileBox = document.getElementById('profile-box');
+
+  if (!Session.isLoggedIn()) {
+    notLoggedBox.classList.remove('hidden');
+    profileBox.classList.add('hidden');
+    return;
+  }
+  notLoggedBox.classList.add('hidden');
+  profileBox.classList.remove('hidden');
+
+  const res = await apiGet({ action: 'getProfile', token: Session.getToken() });
+  if (!res.ok) {
+    // টোকেন মেয়াদ শেষ হলে আবার লগইন করতে হবে
+    Session.clear();
+    profileBox.classList.add('hidden');
+    notLoggedBox.classList.remove('hidden');
+    return;
+  }
+
+  const p = res.profile;
+  document.getElementById('p-email').value = p.email;
+  document.getElementById('p-mobile').value = p.mobile;
+  document.getElementById('p-name').value = p.name;
+  document.getElementById('p-address').value = p.address;
+
+  if (p.photoUrl) {
+    document.getElementById('avatar-img').src = p.photoUrl;
+    document.getElementById('avatar-img').classList.remove('hidden');
+    document.getElementById('avatar-placeholder').classList.add('hidden');
+  }
+}
+
+document.getElementById('photo-input').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  if (file.size > 4 * 1024 * 1024) {
+    alert('ছবির সাইজ ৪ MB এর কম হতে হবে');
+    e.target.value = '';
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = () => {
+    pendingPhotoDataUrl = reader.result; // এটা "data:image/...;base64,..." ফরম্যাটে থাকে
+    document.getElementById('avatar-img').src = pendingPhotoDataUrl;
+    document.getElementById('avatar-img').classList.remove('hidden');
+    document.getElementById('avatar-placeholder').classList.add('hidden');
+  };
+  reader.readAsDataURL(file);
+});
+
+async function saveProfile() {
+  const msg = document.getElementById('p-msg');
+  msg.textContent = 'সেভ হচ্ছে…'; msg.className = 'msg';
+
+  const payload = {
+    action: 'updateProfile',
+    token: Session.getToken(),
+    name: document.getElementById('p-name').value.trim(),
+    address: document.getElementById('p-address').value.trim() // ঐচ্ছিক, খালি রাখা যাবে
+  };
+  if (pendingPhotoDataUrl) payload.photoDataUrl = pendingPhotoDataUrl;
+
+  const res = await apiPost(payload);
+  if (res.ok) {
+    msg.textContent = 'প্রোফাইল সেভ হয়েছে!';
+    msg.className = 'msg success';
+    pendingPhotoDataUrl = null;
+  } else {
+    msg.textContent = res.error || 'সমস্যা হয়েছে';
+    msg.className = 'msg error';
+  }
+}
+
+loadProfile();
+</script>
+</body>
+</html>
