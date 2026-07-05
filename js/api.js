@@ -2,7 +2,7 @@
  * api.js — Apps Script ব্যাকএন্ডের সাথে কথা বলার একমাত্র জায়গা।
  * এখানে GAS_URL বসাতে হবে (ডিপ্লয় করার পর যেই /exec লিংক পাবে)।
  */
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbzNtC9xwiZvxE9UHwa3_gzA1nYKcXi6F_9-Y55FqKvnCRHUb_eBZXIW98nR8YMX_BKF/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbwWnBrJPB-qQdQsEye2y5lya_Grk0tAD366oPUin2fmksR2KFYrp3aTSoesHBm7qid5/exec';
 
 async function apiGet(params) {
   const qs = new URLSearchParams(params).toString();
