@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>e-Book — লার্নিংহাব</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-wrap">
+    <a class="brand" href="../index.html">লার্নিং<span>হাব</span></a>
+    <nav class="main-nav"><ul><li><a href="../index.html">হোম</a></li></ul></nav>
+    <div id="auth-area"></div>
+  </div>
+</header>
+
+<div class="container">
+  <h1 style="margin-top:40px;">e-Book</h1>
+  <p style="color:var(--muted)">সব ধরনের e-Book এখানে পাবেন — ফ্রিতে দেখুন, ডাউনলোড করতে লগইন করুন।</p>
+  <div class="card-grid" id="list">লোড হচ্ছে…</div>
+</div>
+
+<footer class="site-footer">&copy; <span id="year"></span> লার্নিংহাব</footer>
+
+<script src="../js/api.js"></script>
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+async function load() {
+  const box = document.getElementById('list');
+  const res = await apiGet({ action: 'getContent', category: 'ebook' });
+  if (!res.ok || !res.data.length) { box.innerHTML = '<p>এখনো কোনো e-Book নেই।</p>'; return; }
+  box.innerHTML = res.data.map(item => `
+    <div class="card">
+      <h3>${item.Title}</h3>
+      <p>${item.Description || ''}</p>
+      <div class="card-footer">
+        <button class="btn" onclick="handleDownload('${item.https://drive.google.com/file/d/1xXt49PlEwvv4jghamu6k4VvxSfXpdFXn/view?usp=drive_linkl}')">ডাউনলোড</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function handleDownload(https://drive.google.com/file/d/1xXt49PlEwvv4jghamu6k4VvxSfXpdFXn/view?usp=drive_link) {
+  if (!Session.isLoggedIn()) {
+    alert('ডাউনলোড করতে হলে আগে লগইন করুন।');
+    window.location.href = 'login.html';
+    return;
+  }
+  window.open(https://drive.google.com/file/d/1xXt49PlEwvv4jghamu6k4VvxSfXpdFXn/view?usp=drive_link, '_blank');
+}
+
+load();
+</script>
+</body>
+</html>
