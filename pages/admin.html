@@ -42,8 +42,8 @@
       <input type="text" id="c-description">
     </div>
     <div class="field">
-      <label>PDF/ফাইল লিংক (Google Drive শেয়ার লিংক)</label>
-      <input type="text" id="c-fileurl">
+      <label>কনটেন্ট (পাঠ্য/টেক্সট — এটা শীটে সেভ হবে এবং ইউজার ডাউনলোড করলে PDF হবে)</label>
+      <textarea id="c-content" placeholder="এখানে মূল কনটেন্ট লিখুন..." rows="8" style="width:100%; padding:8px; border-radius:8px; border:1px solid #D8D0BC; font-family:var(--font-body); font-size:0.9rem;"></textarea>
     </div>
     <button class="btn" onclick="addContent()">যোগ করুন</button>
     <p class="msg" id="c-msg"></p>
@@ -79,13 +79,14 @@ async function addContent() {
     subcategory: document.getElementById('c-subcategory').value.trim(),
     title: document.getElementById('c-title').value.trim(),
     description: document.getElementById('c-description').value.trim(),
-    fileUrl: document.getElementById('c-fileurl').value.trim()
+    content: document.getElementById('c-content').value.trim()
   };
   const msg = document.getElementById('c-msg');
   const res = await apiPost(payload);
   if (res.ok) {
     msg.textContent = 'যোগ হয়েছে!';
     msg.className = 'msg success';
+    document.getElementById('c-content').value = ''; // ফর্ম ক্লিয়ার করো
     loadAllContent();
   } else {
     msg.textContent = res.error || 'সমস্যা হয়েছে';
